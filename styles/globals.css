@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+p {
+  color: deeppink;
+}
+h1 {
+  color: orangered;
+}
