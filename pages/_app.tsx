@@ -4,7 +4,6 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <p>这是一个最外层的内容</p>
       <Component {...pageProps} />
     </>
   );
