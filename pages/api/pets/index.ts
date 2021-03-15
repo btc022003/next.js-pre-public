@@ -1,16 +1,24 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { NextApiRequest, NextApiResponse } from 'next'
-import dbConnect from '../../../utils/dbconnect'
-import Pet from '../../../models/pet'
+import { NextApiRequest, NextApiResponse } from 'next';
+import dbConnect from '@/utils/dbconnect';
+import PetsServices from '@/services/pets';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  res.statusCode = 200
-  await dbConnect()
-  if(req.method == 'POST' ) {
-    const pet = new Pet(JSON.parse(req.body))
-    await pet.save()
-    res.json({code: 1,msg: '新增成功'})
+  res.statusCode = 200;
+  await dbConnect();
+  const services = new PetsServices(); // 创建一个服务的实例
+  if (req.method == 'POST') {
+    try {
+      res.statusCode = 200;
+      await services.save(JSON.parse(req.body));
+      res.json({ code: 1, msg: '新增成功' });
+    } catch (err) {
+      console.log(err);
+      res.statusCode = 500;
+      res.json(err);
+    }
   } else {
-    const data = await Pet.find()
-    res.json(data)
+    res.statusCode = 200;
+    const data = await services.all();
+    res.json(data);
   }
-}
+};

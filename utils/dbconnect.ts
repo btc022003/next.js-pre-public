@@ -1,15 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 // 创建一个数据库连接方法
 async function dbConnect() {
-  if(mongoose.connection.readyState >= 1) {
-    return
+  if (mongoose.connection.readyState >= 1) {
+    return;
   }
-  return mongoose.connect('mongodb://localhost:27017/cat-shop', {
+  return mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: true
-  })
+    useFindAndModify: true,
+  });
 }
 
-export default dbConnect
+export default dbConnect;
